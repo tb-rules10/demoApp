@@ -15,4 +15,8 @@ def read_root():
 async def preferences(req: Request):
     return { "status": True, "response": "Hi, I'm FastAPI" }
 
+"""
+ADD AND TEST MACHINE LEARNING MODEL
+"""
+
 # uvicorn main:app --reload --host 0.0.0.0 --port 5000
