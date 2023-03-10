@@ -3,8 +3,9 @@ const app = express();
 const userRoutes = require("./routes/userRoutes");
 const {home} = require('./controllers/userController.js');
 require("dotenv").config();
+const cors = require("cors");
 
-
+app.use(cors());
 app.use(express.urlencoded({ extended: true }))
 
 app.use("/api",userRoutes);

@@ -8,11 +8,11 @@ class ResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick Your Playlist'),
+        title: Text('Client-Server Connection'),
       ),
       body: Center(
         child: Text(
-          output["response"] != null ? output["response"] : output["response"],
+          output["msg"] != null ? output["msg"] : output["msg"],
           style: const TextStyle(
             color: Colors.white,
             fontSize: 40.0,
