@@ -20,16 +20,7 @@ async def preferences(req: Request):
     return { "status": True, "msg": "Hi, I'm FastAPI" }
 
 
-# @app.post("/api/predict")
-# async def predict_Emotion(req: Request):
-#     data = await req.json()
-#     print(data)
-#     res = classifier.predict([data['text']])[0]
-#     print(res)
-#     # return { "status": True, "msg": {res} }
-#     return { "status": True, "msg": "Hi, I'm FastAPI" }
-
-
+# pydantic model working fine with postman but not with flutter T_T
 @app.post("/api/predict")
 async def predict_Emotion(data: EmotionDetector):
     data = data.dict()
@@ -39,8 +30,14 @@ async def predict_Emotion(data: EmotionDetector):
     return { "status": True, "msg": f'{res}' }
 
 
-"""
-ADD AND TEST MACHINE LEARNING MODEL
-"""
+# @app.post("/api/predict")
+# async def predict_Emotion(req: Request):
+#     data = await req.json()
+#     print(data)
+#     res = classifier.predict([data['text']])[0]
+#     print(res)
+#     # return { "status": True, "msg": {res} }
+#     return { "status": True, "msg": "Hi, I'm FastAPI" }
+
 
 # uvicorn main:app --reload --host 0.0.0.0 --port 5000
