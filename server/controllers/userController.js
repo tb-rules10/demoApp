@@ -20,19 +20,19 @@ module.exports.data = (req, res, next) => {
 
 module.exports.predict = async (req, res, next) => {
   try {
+    if(req.body === {}) console.log("hello");
     const { text:data } = req.body;
-    // console.log(data);
     const options = {
       pythonOptions: ['-u'],
       scriptPath: 'scripts/',
       args: [data]
     };
-
     let pyshell = new PythonShell('model.py', options);
     await pyshell.on('message', function (message) {
       // console.log(message); 
-      return res.json({ status: true, msg: message });
+      return res.json({ status: true, msg: `${data}   ->   ${message}` });
     });
+    // return res.json({ status: true, msg: `hello` });
   }
   catch (err) {
     next(err);

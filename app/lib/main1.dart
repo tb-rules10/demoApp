@@ -156,23 +156,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<Map<dynamic, dynamic>> postData() async {
     try {
-      // var url = Uri.https('http://localhost:5000', '/data');
-      // print("clicked");
-      var response =
-          await http.post(Uri.parse("http://10.0.2.2:5000/api/input"), body: {
-        "name": "TB",
-        "emotion": selectedEmotion.toString(),
-        "genre": selectedGenre.toString(),
-      }).timeout(const Duration(seconds: 2));
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      final url = Uri.parse('http://10.0.2.2:5000/api/input');
+      Map<String, String> data = {
+        'name': "TB",
+        'emotion': selectedEmotion.toString(),
+        'genre': selectedGenre.toString(),
+      };
+      String body = jsonEncode(data);
+      print(body);
+      final response = await http.post(url, body: body).timeout(const Duration(seconds: 2));
       Map<dynamic, dynamic> temp = json.decode(response.body);
-      // print("hello");
       return temp;
     } catch (e) {
       print("ERROR - $e");
       Map<dynamic, dynamic> temp = {"msg" : "Bad Request or Server might be down :("};
-      // print(temp);
       return temp;
     }
   }

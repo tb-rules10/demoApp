@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main2.dart';
-import 'main1.dart';
 import 'bottomNavBar.dart';
 
 void main() {

@@ -63,7 +63,6 @@ class _DemoApp2State extends State<DemoApp2> {
                 setState(() {
                   isLoading = true;
                   postData(myController.text).then((result) {
-                    print("In builder");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -98,12 +97,12 @@ class _DemoApp2State extends State<DemoApp2> {
 
 Future<Map<dynamic, dynamic>> postData(String textField) async {
   try {
-    // print(textField);
-    // String text = "I want to cry";
     final url = Uri.parse('http://10.0.2.2:5000/api/predict');
-    final data = {'text': textField};
-    final response =
-        await http.post(url, body: data).timeout(const Duration(seconds: 5));
+    Map<String, String> data = {'text': textField};
+    String body = jsonEncode(data);
+    // Use `data` in request body if using Node.js server as backend
+    // Use `body` in request body if using FastAPI server as backend
+    final response = await http.post(url, body: body).timeout(const Duration(seconds: 5));
     Map<dynamic, dynamic> temp = await json.decode(response.body);
     return temp;
   } catch (e) {
