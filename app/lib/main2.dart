@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:app/results_page.dart';
 import 'package:http/http.dart' as http;
 
+late String ipAddress;
+
 class DemoApp2 extends StatefulWidget {
   const DemoApp2({Key? key}) : super(key: key);
 
@@ -11,6 +13,7 @@ class DemoApp2 extends StatefulWidget {
 }
 
 class _DemoApp2State extends State<DemoApp2> {
+  TextEditingController ipController = TextEditingController();
   TextEditingController myController = TextEditingController();
   bool isLoading = false;
   void dispose() {
@@ -36,8 +39,33 @@ class _DemoApp2State extends State<DemoApp2> {
               height: 100,
               width: 300,
               child: TextField(
+                controller: ipController,
+                decoration: InputDecoration(
+                  labelText: "Enter IP add & press enter",
+                  fillColor: Colors.black,
+                  filled: true,
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      width: 5,
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                ),
+                onSubmitted: (query){
+                  ipAddress = query;
+                },
+              ),
+            ),
+            SizedBox(
+              height: 100,
+              width: 300,
+              child: TextField(
                 controller: myController,
                 decoration: InputDecoration(
+                  labelText: "Emotion",
                   fillColor: Colors.black,
                   filled: true,
                   prefixIcon: Icon(Icons.search),
@@ -57,7 +85,6 @@ class _DemoApp2State extends State<DemoApp2> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
                     backgroundColor: Colors.green,
-
               ),
               onPressed: () async {
                 setState(() {
@@ -97,7 +124,7 @@ class _DemoApp2State extends State<DemoApp2> {
 
 Future<Map<dynamic, dynamic>> postData(String textField) async {
   try {
-    final url = Uri.parse('http://10.0.2.2:5000/api/predict');
+    final url = Uri.parse('http://$ipAddress:5000/api/predict');
     Map<String, String> data = {'text': textField};
     String body = jsonEncode(data);
     // Use `data` in request body if using Node.js server as backend
@@ -108,7 +135,7 @@ Future<Map<dynamic, dynamic>> postData(String textField) async {
   } catch (e) {
     print("ERROR - $e");
     Map<dynamic, dynamic> temp = {
-      "response": "Bad Request or Server might be down :("
+      "msg": "Bad Request or Server might be down :("
     };
     return temp;
   }
